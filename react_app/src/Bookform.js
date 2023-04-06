@@ -26,7 +26,7 @@ function BookForm() {
       setErrors(errors);
       return;
     }
-    axios.post('http://localhost:3000/books', book)
+    axios.post('http://localhost:8080/books', book)
       .then((response) => {
         console.log(response.data);
         setBook({

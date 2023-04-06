@@ -40,6 +40,22 @@ connection.connect((err) => {
     });
   });
 });
+// GET books by search query
+app.get('/books/search', (req, res) => {
+  const searchTerm = req.query.searchTerm;
+  const filterOption = req.query.filterOption;
+  console.log("Hello");
+
+  // Use connection pool to execute MySQL query
+  connection.query(`SELECT * FROM books WHERE ${filterOption} LIKE ?`, [`%${searchTerm}%`], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    
+    res.json(results);
+  });
+});
 
 // GET all books
 app.get('/books', (req, res) => {
@@ -88,21 +104,9 @@ app.delete('/books/:id', (req, res) => {
   });
 });
 
-// GET books by search query
-app.get('/books/search', (req, res) => {
-  const { query } = req.query;
-  
-  console.log("hello");
-  console.log(query);
-  connection.query('SELECT * FROM books WHERE name LIKE ? OR author LIKE ? OR genre LIKE ?', [`%${query}%`, `%${query}%`, `%${query}%`], (err, results) => {
-    if (err) throw err;
-    
-    res.json(results);
-  });
-});
 
 
 // Start the server
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+app.listen(8080, () => {
+  console.log('Server started on port 8080');
 });

@@ -5,7 +5,7 @@ function BookTable() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/books')
+    axios.get('http://localhost:8080/books')
       .then(response => {
         setBooks(response.data);
       })
@@ -15,7 +15,7 @@ function BookTable() {
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3000/books/${id}`)
+    axios.delete(`http://localhost:8080/books/${id}`)
       .then(response => {
         setBooks(books.filter(book => book.id !== id));
       })
@@ -43,7 +43,7 @@ function BookTable() {
             <td>{book.author}</td>
             <td>{book.genre}</td>
             <td>
-              <a href={`http://localhost:3001/update/${book.id}`}>Update</a>
+              <a href={`http://localhost:8080/update/${book.id}`}>Update</a>
               <button onClick={() => handleDelete(book.id)}>Delete</button>
             </td>
           </tr>
