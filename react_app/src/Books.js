@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function BookTable() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/books')
-      .then(response => {
+    axios
+      .get("http://localhost:8080/books")
+      .then((response) => {
         setBooks(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8080/books/${id}`)
-      .then(response => {
-        setBooks(books.filter(book => book.id !== id));
+    axios
+      .delete(`http://localhost:8080/books/${id}`)
+      .then((response) => {
+        setBooks(books.filter((book) => book.id !== id));
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -36,14 +38,14 @@ function BookTable() {
         </tr>
       </thead>
       <tbody>
-        {books.map(book => (
+        {books.map((book) => (
           <tr key={book.id}>
             <td>{book.id}</td>
             <td>{book.name}</td>
             <td>{book.author}</td>
             <td>{book.genre}</td>
             <td>
-              <a href={`http://localhost:8080/update/${book.id}`}>Update</a>
+              <a href={`http://localhost:3000/update/${book.id}`}>Update</a>
               <button onClick={() => handleDelete(book.id)}>Delete</button>
             </td>
           </tr>
